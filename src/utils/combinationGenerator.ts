@@ -1,3 +1,5 @@
+import fastCartesian from 'fast-cartesian';
+
 const uppercaseAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 export const typesGenerator = (input: number[]) => {
@@ -34,26 +36,9 @@ export const getCombinations = (
   return result;
 };
 
-export const cartesianProduct = (types: string[][]): string[][] => {
-  if (types.length === 0) return [[]];
-  if (types.length === 1) return types[0].map((type) => [type]);
-
-  const [head, ...tail] = types;
-  const tailProduct = cartesianProduct(tail);
-
-  const result: string[][] = [];
-  for (const headEl of head) {
-    for (const tailEl of tailProduct) {
-      result.push([headEl, ...tailEl]);
-    }
-  }
-
-  return result;
-};
-
 export const combinationGenerator = (input: number[], length: number) => {
   const types = typesGenerator(input);
   const combos = getCombinations(types, length);
-  const combination = combos.flatMap((combo) => cartesianProduct(combo));
+  const combination = combos.flatMap((combo) => fastCartesian(combo));
   return { combination, types };
 };
