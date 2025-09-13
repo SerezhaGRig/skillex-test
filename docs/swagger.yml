@@ -1,0 +1,97 @@
+openapi: 3.0.3
+info:
+  title: Generate combnations API
+  description: |
+    A TypeScript web API to generate and store combinations
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+
+paths:
+  /generate:
+    post:
+      summary: Generate combinations
+      description: Generate combinations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                items:
+                  type: array
+                  items:
+                    type: integer
+                length:
+                  type: number
+      responses:
+        '200':
+          description: Combination successfully genrated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  combination:
+                    type: array
+                    items:
+                      type: array
+                      items: 
+                        type: string
+        '400':
+          $ref: '#/components/responses/ValidationErrorResponse'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+components:
+  schemas:
+
+
+    Error:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: "Invalid request format"
+        details:
+          type: object
+          description: Additional error details
+          additionalProperties: true
+
+  responses:
+    InternalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "Internal server error"
+
+    ValidationErrorResponse:
+      description: "Validation error response"
+      content:
+        "application/json":
+          schema:
+              type: object
+              required:
+                - error
+              properties:
+                error:
+                  type: string
+                  enum:
+                    - "Validation Error"
+                details:
+                  description: "Validation details"
+                  type: array
+                  items:
+                    description: "Validation detail"
+                    type: object

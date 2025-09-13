@@ -1,0 +1,40 @@
+{
+  "name": "skillex-test",
+  "version": "1.0.0",
+  "main": "src/app.ts",
+  "scripts": {
+    "start": "node dist/src/app.js",
+    "build": "npx tsc",
+    "test": "jest",
+    "migration": "tsx src/scripts/migration.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@types/uuid": "^10.0.0",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "globals": "^16.3.0",
+    "mysql2": "^3.14.5",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.42.0",
+    "uuid": "^11.1.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.18.0",
+    "@types/express": "^5.0.3",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.3.3",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.2",
+    "jest": "^30.1.3",
+    "prettier": "^3.4.2",
+    "ts-jest": "^29.4.1"
+  }
+}
