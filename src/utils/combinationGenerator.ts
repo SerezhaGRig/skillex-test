@@ -1,5 +1,3 @@
-import fastCartesian from 'fast-cartesian';
-
 const uppercaseAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 export const typesGenerator = (input: number[]) => {
@@ -14,31 +12,32 @@ export const typesGenerator = (input: number[]) => {
   return types;
 };
 
-export const getCombinations = (
+export const generateCombinations = (
   types: string[][],
   length: number,
-): string[][][] => {
-  if (length > types.length || length <= 0) return [];
-  if (length === types.length) return [types];
-  if (length === 1) return types.map((type) => [type]);
-
-  const result = [];
-
-  for (let i = 0; i <= types.length - length; i++) {
-    const head = types[i];
-    const tailCombinations = getCombinations(types.slice(i + 1), length - 1);
-
-    for (const tail of tailCombinations) {
-      result.push([head, ...tail]);
+): string[][] => {
+  const result: string[][] = [];
+  const backtrack = (combo: string[], typeIndex: number) => {
+    if (combo.length === length) {
+      result.push([...combo]);
+      return;
     }
-  }
-
+    if (typeIndex >= types.length) {
+      return;
+    }
+    for (const item of types[typeIndex]) {
+      combo.push(item);
+      backtrack(combo, typeIndex + 1);
+      combo.pop();
+    }
+    backtrack(combo, typeIndex + 1);
+  };
+  backtrack([], 0);
   return result;
 };
 
 export const combinationGenerator = (input: number[], length: number) => {
   const types = typesGenerator(input);
-  const combos = getCombinations(types, length);
-  const combination = combos.flatMap((combo) => fastCartesian(combo));
+  const combination = generateCombinations(types, length);
   return { combination, types };
 };
